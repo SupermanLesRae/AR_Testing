@@ -17,38 +17,86 @@
       embedded
       arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
     >
-      <!-- Object with GPS coordinates -->
+      <!-- Box object, initially hidden -->
       <a-box
-        gps-entity-place="latitude: YOUR_LATITUDE; longitude: YOUR_LONGITUDE;"
+        id="box"
         width="0.25"
         height="0.25"
         depth="0.25"
         color="#4CC3D9"
+        gps-entity-place
+        visible="false"
       ></a-box>
 
+      <!-- Sphere object, initially hidden -->
       <a-sphere
-        gps-entity-place="latitude: YOUR_LATITUDE; longitude: YOUR_LONGITUDE;"
+        id="sphere"
         radius="0.3125"
         color="#EF2D5E"
+        gps-entity-place
+        visible="false"
       ></a-sphere>
 
+      <!-- Cylinder object, initially hidden -->
       <a-cylinder
-        gps-entity-place="latitude: YOUR_LATITUDE; longitude: YOUR_LONGITUDE;"
+        id="cylinder"
         radius="0.125"
         height="0.375"
         color="#FFC65D"
+        gps-entity-place
+        visible="false"
       ></a-cylinder>
 
+      <!-- Plane object, initially hidden -->
       <a-plane
-        gps-entity-place="latitude: YOUR_LATITUDE; longitude: YOUR_LONGITUDE;"
+        id="plane"
         rotation="-90 0 0"
         width="1"
         height="1"
         color="#7BC8A4"
         shadow
+        gps-entity-place
+        visible="false"
       ></a-plane>
 
       <a-camera gps-camera rotation-reader></a-camera>
     </a-scene>
+
+    <script>
+      // Function to update the GPS position of the objects
+      function updatePosition(latitude, longitude) {
+        const box = document.querySelector("#box");
+        const sphere = document.querySelector("#sphere");
+        const cylinder = document.querySelector("#cylinder");
+        const plane = document.querySelector("#plane");
+
+        // Set the GPS coordinates and make objects visible
+        box.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
+        sphere.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
+        cylinder.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
+        plane.setAttribute("gps-entity-place", `latitude: ${latitude}; longitude: ${longitude}`);
+
+        box.setAttribute("visible", "true");
+        sphere.setAttribute("visible", "true");
+        cylinder.setAttribute("visible", "true");
+        plane.setAttribute("visible", "true");
+      }
+
+      // Get user's current position
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            updatePosition(latitude, longitude);
+          },
+          function (error) {
+            console.error("Error getting GPS position", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    </script>
   </body>
 </html>
