@@ -4,22 +4,34 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>GeoAR.js demo</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script> 
+    <!-- include a-frame -->
+
+    
   </head>
 
-  <body>
-    <a-scene
-      vr-mode-ui="enabled: false"
-      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
-    >
-    <a-box width="0.25" height="0.25" depth="0.25" position="-0.25 1.125 -0.75" rotation="0 45 0" color="#4CC3D9"></a-box>
-    <a-sphere position="0 1.3125 -1.25" radius="0.3125" color="#EF2D5E"></a-sphere>
-    <a-cylinder position="0.25 1.1875 -0.75" radius="0.125" height="0.375" color="#FFC65D"></a-cylinder>
-    <a-plane position="0 0 -1" rotation="-90 0 0" width="1" height="1" color="#7BC8A4" shadow></a-plane>
+  
 
-      <a-camera  rotation-reader> </a-camera>
-    </a-scene>
-  </body>
+
+  <body style='margin : 0px; overflow: hidden;'>
+	<div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
+		<a href="https://github.com/jeromeetienne/AR.js/" target="_blank">AR.js</a> - tango example for a-frame by <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
+	</div>
+	<!-- Define your scene -->
+	<a-scene embedded arjs='trackingMethod: tango;'>
+		<!-- Create a anchor to attach your augmented reality -->
+		<a-anchor hit-testing-enabled='true'>
+			<!-- Add your augmented reality here -->
+			<a-box position='0 0.5 0' material='opacity: 0.5; side:double; color:red;'>
+				<a-torus-knot radius='0.26' radius-tubular='0.05'>
+					<a-animation attribute="rotation" to="360 0 0" dur="5000" easing='linear' repeat="indefinite"></a-animation>
+				</a-torus-knot>
+			</a-box>
+		</a-anchor>
+		<!-- Define a static camera -->
+		<a-camera-static/>
+	</a-scene>
+</body>
 </html> 
